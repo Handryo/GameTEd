@@ -1,0 +1,100 @@
+/* MeusJogos.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100vw;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-x: hidden; /* Evita o scroll horizontal */
+}
+
+h1 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+.games-container {
+  width: 100%;
+  max-width: 1200px; /* Limite de largura para o container dos jogos */
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo */
+  overflow-x: auto; /* Adiciona scroll horizontal para efeito de carrossel */
+  padding-bottom: 20px;
+}
+
+.card-grid {
+  display: flex; /* Muda para flex para estilo carrossel */
+  gap: 16px; /* Espaçamento entre os cards */
+  overflow-x: auto; /* Permite rolagem horizontal para o efeito de carrossel */
+  padding: 10px;
+}
+
+.card-grid::-webkit-scrollbar {
+  height: 8px; /* Altura da barra de rolagem */
+}
+
+.card-grid::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.card {
+  flex: 0 0 auto; /* Evita que os cards se expandam para além do seu tamanho ideal */
+  width: 200px; /* Largura dos cards */
+  height: 300px; /* Altura dos cards */
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover; /* Mantém a proporção da imagem */
+  border-bottom: 1px solid #ddd;
+}
+
+.card h2 {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Efeito de hover para ampliar o card */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Centraliza o botão */
+  width: 100%;
+  padding-bottom: 20px; /* Espaçamento inferior para o botão */
+}
+
+.submit-game-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.submit-game-button:hover {
+  background-color: #0056b3;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 6px;
+  transform: scale(1.05);
+}

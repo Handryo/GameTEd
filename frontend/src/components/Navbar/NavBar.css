@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+}
+
+.logo {
+  flex: 1; /* Faz o logo ocupar uma parte flexível do espaço disponível */
+}
+
+.logo img{
+  width: 35%;
+  height: auto;
+  padding: 10px;
+}
+
+
+.logo a {
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.logo a:hover {
+  color: #666;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.nav-items {
+  flex: 2; /* Faz o contêiner de navegação ocupar mais espaço */
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo dentro de nav-items */
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  margin-right: 2rem; /* Ajuste para separar links de navegação do input */
+}
+
+.nav-links a {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #666;
+}
+
+.nav-items input {
+  padding: 0.5rem 1rem;
+  margin: 0 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-items input:focus {
+  border-color: #000000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.auth {
+  flex: 1; /* Faz a seção de autenticação ocupar uma parte flexível do espaço disponível */
+  display: flex;
+  justify-content: flex-end; /* Alinha a autenticação ao final do contêiner nav-items */
+}
+
+.auth a {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #000000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.auth a:hover {
+  background-color: #000000;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .nav-items {
+    flex-direction: column;
+    align-items: center; /* Centraliza os itens de navegação em dispositivos menores */
+  }
+
+  .nav-links,
+  .nav-items input,
+  .auth a {
+    margin: 0.5rem 0;
+  }
+
+  .auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinha a autenticação centralmente em dispositivos menores */
+  }
+}

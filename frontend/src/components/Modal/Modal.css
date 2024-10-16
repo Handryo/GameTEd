@@ -1,0 +1,88 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal-body {
+    background-color: white;
+    padding: 16px;
+    max-height: 80vh; /* Limita a altura máxima do modal */
+    max-width: 90vw; /* Limita a largura máxima do modal */
+    width: 100%;
+    height: auto; /* Ajusta a altura conforme necessário */
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha o conteúdo ao topo */
+    box-sizing: border-box;
+    overflow: auto; /* Permite o scroll se necessário */
+}
+
+.modal-body h2 {
+    font-size: 20px; /* Diminui o tamanho da fonte */
+    margin-bottom: 8px; /* Reduz o espaço abaixo do título */
+    text-align: center;
+}
+
+.input-container {
+    width: 100%;
+    margin-bottom: 8px; /* Reduz o espaço entre os inputs */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.modal-body input {
+    padding: 6px; /* Diminui o padding dos inputs */
+    border: 1px solid #c6c5c5;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 14px; /* Reduz o tamanho da fonte */
+    line-height: 18px; /* Ajusta o line-height para corresponder ao tamanho da fonte */
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 4px;
+    box-sizing: border-box;
+}
+
+.modal-body label {
+    color: #242424;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 14px; /* Diminui o tamanho da fonte */
+    display: block;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.btn-secondary {
+    flex: 1;
+    background-color: #3a44f8;
+    color: white;
+    padding: 8px; /* Diminui o padding dos botões */
+    border-radius: 8px;
+    border: none;
+    font-size: 14px; /* Reduz o tamanho da fonte */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #2e38d0;
+    transform: scale(1.05);
+}
+
+.btn-secondary.cancel {
+    background-color: #ccc;
+    color: #000;
+}

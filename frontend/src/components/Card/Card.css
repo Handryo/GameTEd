@@ -1,0 +1,22 @@
+.game-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 10px;
+    position: relative;
+  }
+  
+  .game-card img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .game-details {
+    margin-top: 10px;
+  }
+  
+  input {
+    display: block;
+    margin: 5px 0;
+  }
+  

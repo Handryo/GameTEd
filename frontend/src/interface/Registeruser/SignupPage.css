@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+.container {
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between; /* Distribui o espaço entre os elementos filhos */
+  width: 90%;
+  max-width: 1200px; /* Largura máxima do conteúdo */
+  
+}
+
+.form-section,
+.profile-section {
+  flex: 1; /* Ambas as seções ocupam o espaço disponível igualmente */
+  background-color: #fff; /* Fundo branco para as seções */
+}
+
+.form-section {
+  margin-right: 0.5rem; /* Espaço entre as seções */
+}
+
+.form-section h1 {
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 1rem; /* Espaçamento inferior do título */
+}
+
+.form-section label {
+  display: block;
+  margin: 0.5rem 0; /* Espaçamento vertical dos labels */
+}
+
+.form-section input[type="text"],
+.form-section input[type="email"],
+.form-section input[type="password"]{
+  width: 95%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.placeholder {
+  color: #aaa; /* Cor do texto de placeholder */
+  font-size: 0.9rem; /* Tamanho da fonte */
+  margin-top: 1rem; /* Espaçamento superior */
+  font-style: italic; /* Estilo da fonte */
+}
+
+fieldset {
+  margin: 1rem 0; /* Espaçamento externo do fieldset */
+  border: 1px solid #ccc; /* Borda do fieldset */
+  padding: 1rem; /* Espaçamento interno */
+}
+
+.form-actions {
+  display: flex;
+  width: 80%;
+  justify-content: space-between; /* Distribui os botões igualmente */
+  margin-top: 1rem; /* Espaçamento superior */
+  margin: auto;
+}
+
+.form-actions button {
+  padding: 0.5rem 1rem; /* Espaçamento interno do botão */
+  border: none; /* Sem borda */
+  border-radius: 4px; /* Borda arredondada */
+  cursor: pointer; /* Cursor de ponteiro ao passar por cima */
+}
+
+.form-actions button[type="button"] {
+  font-family: 'Montserrat', sans-serif;
+  margin-right: 10%;
+  background: #000; /* Cor de fundo do botão Cancelar */
+  color: #fff; /* Cor do texto do botão Cancelar */
+}
+
+.form-actions button[type="submit"] {
+  font-family: 'Montserrat', sans-serif;
+  background: #ff4d4d; /* Cor de fundo do botão Criar Conta */
+  color: #fff; /* Cor do texto do botão Criar Conta */
+}
+
+.profile-section {
+  margin-left: 0.5rem; /* Espaço entre as seções */
+}
+
+.profile-section h1{
+  font-family: 'Montserrat', sans-serif;
+}
+
+.profile-options {
+  display: flex;
+  flex-direction: column; /* Direção da coluna para as opções de perfil */
+}
+
+.profile-option {
+  display: flex; /* Exibição em linha das opções de perfil */
+  align-items: center; /* Alinhamento vertical central */
+  margin-bottom: 1rem; /* Espaçamento inferior entre as opções */
+}
+
+.profile-text {
+  font-family: 'Montserrat', sans-serif;
+  flex: 1; /* Expande para ocupar o espaço disponível */
+  margin-right: 1rem; /* Espaçamento à direita do texto */
+}
+
+.profile-image {
+  width: 200px; /* Tamanho da imagem de perfil */
+  height: auto; /* Altura automática da imagem */
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column; /* Empilhamento em dispositivos menores */
+  }
+
+  .form-section,
+  .profile-section {
+    width: 100%; /* Ocupa toda a largura em dispositivos menores */
+    margin: 0; /* Remove margens */
+    margin-bottom: 1rem; /* Espaçamento inferior entre as seções */
+  }
+}
+

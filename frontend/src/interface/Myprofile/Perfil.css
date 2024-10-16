@@ -1,0 +1,193 @@
+/* perfil.css */
+
+/* Geral */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container principal do perfil */
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    height: 100vh; /* Para ocupar a altura total da tela */
+}
+
+/* Cabeçalho do perfil */
+.profile-header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Container do conteúdo do perfil */
+.profile-content {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    gap: 20px; /* Espaçamento entre as seções */
+}
+
+/* Container para o layout em linhas e colunas */
+.profile-grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+}
+
+/* Definindo a posição das seções */
+.profile-header {
+    flex: 1 1 100%; /* Ocupa toda a largura disponível na primeira linha */
+}
+
+.profile-section {
+    flex: 1 1 25%; /* Ocupa 1/4 da largura total */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+}
+
+.profile-info {
+    flex: 1 1 25%; /* Ocupa 1/4 da largura total */
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-settings {
+    flex: 1 1 25%; /* Ocupa 1/4 da largura total */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+}
+
+.delete-account-button {
+    flex: 1 1 25%; /* Ocupa 1/4 da largura total */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Estilização dos elementos internos */
+.profile-picture {
+    text-align: center;
+    color: #007bff;
+    background-color: transparent; /* Garante que não haja fundo atrás da imagem */
+    padding: 0; /* Remove padding que possa estar afetando */
+    margin: 0; /* Remove margens que possam estar afetando */
+}
+.profile-picture :hover{
+    color: #6faef1;
+}
+
+.profile-picture img.photo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    background-color: transparent; /* Garante que a imagem não tenha fundo */
+    border: none; 
+}
+
+.profile-picture label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profile-picture input[type="file"] {
+    display: none; /* Oculta o input de arquivo */
+}
+
+.profile-info h2 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.profile-info p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.profile-settings h2 {
+    margin-top: 10%;
+    font-size: 20px;
+    color: #333;
+    margin-left: 25%;
+}
+
+.profile-settings label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.profile-settings input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.profile-settings button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.profile-settings input::placeholder {
+    color: #999; /* Cor do texto do placeholder */
+    font-style: italic; /* Estilo da fonte, pode ser normal, itálico, etc. */
+    font-size: 16px; /* Tamanho da fonte do placeholder */
+}
+
+
+.profile-settings button:hover {
+    background-color: #0056b3;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* Alinha o conteúdo (botão) ao final do contêiner */
+    width: 100%; /* Garante que o contêiner ocupe toda a largura disponível */
+}
+
+.delete-account-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #dc3545;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    max-width: 200px; /* Define a largura máxima do botão */
+    width: auto; /* Permite que o botão tenha apenas a largura necessária */
+    display: block; /* Garante que o botão não se expanda para a largura total */
+    text-align: center; /* Alinha o texto ao centro */
+}
+
+.delete-account-button:hover {
+    background-color: #c82333;
+}
