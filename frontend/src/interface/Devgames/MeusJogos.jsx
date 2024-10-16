@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './MeusJogos.css';
 import { Card } from '../../components/Card/Card.jsx';
 import { getGames } from '../../services/gameService';
-import { CreateModal } from '../../components/Modal/CreateModal.jsx';
+import CreateModal from '../../components/Modal/CreateModal.jsx'; // Importando sem chaves
 
 function MeusJogos() {
   const [gamesList, setGamesList] = useState([]);
@@ -56,7 +56,12 @@ function MeusJogos() {
         </button>
       </div>
 
-      {isModalOpen && <CreateModal closeModal={handleOpenModal} onGameAdded={handleAddGame} />}
+      {isModalOpen && (
+        <CreateModal 
+          closeModal={handleOpenModal} 
+          onGameSubmitted={handleAddGame} // Ajustando o nome da prop para corresponder ao que está no modal
+        />
+      )}
     </div>
   );
 }

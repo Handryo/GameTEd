@@ -1,88 +1,221 @@
 .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
 }
 
 .modal-body {
-    background-color: white;
-    padding: 16px;
-    max-height: 80vh; /* Limita a altura máxima do modal */
-    max-width: 90vw; /* Limita a largura máxima do modal */
-    width: 100%;
-    height: auto; /* Ajusta a altura conforme necessário */
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Alinha o conteúdo ao topo */
-    box-sizing: border-box;
-    overflow: auto; /* Permite o scroll se necessário */
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 750px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modal-body h2 {
-    font-size: 20px; /* Diminui o tamanho da fonte */
-    margin-bottom: 8px; /* Reduz o espaço abaixo do título */
-    text-align: center;
+  font-size: rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  text-align: center;
+  font-weight: 700;
 }
 
 .input-container {
-    width: 100%;
-    margin-bottom: 8px; /* Reduz o espaço entre os inputs */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  margin-bottom: 0.2rem;
 }
 
-.modal-body input {
-    padding: 6px; /* Diminui o padding dos inputs */
-    border: 1px solid #c6c5c5;
-    color: rgba(0, 0, 0, 0.9);
-    font-size: 14px; /* Reduz o tamanho da fonte */
-    line-height: 18px; /* Ajusta o line-height para corresponder ao tamanho da fonte */
-    border-radius: 8px;
-    width: 100%;
-    margin-top: 4px;
-    box-sizing: border-box;
+.input-container label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #34495e;
+  font-size: 0.95rem;
 }
 
-.modal-body label {
-    color: #242424;
-    font-weight: 600;
-    margin-bottom: 4px;
-    font-size: 14px; /* Diminui o tamanho da fonte */
-    display: block;
+.input-container input[type="text"],
+.input-container input[type="url"],
+.input-container textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
 }
 
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    margin-top: 16px;
+.input-container input[type="text"]:focus,
+.input-container input[type="url"]:focus,
+.input-container textarea:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.input-container input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+.input-container input[type="file"] {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border: 1px dashed #bdc3c7;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.curriculum-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.curriculum-grid input {
+  width: 100%;
 }
 
 .btn-secondary {
-    flex: 1;
-    background-color: #3a44f8;
-    color: white;
-    padding: 8px; /* Diminui o padding dos botões */
-    border-radius: 8px;
-    border: none;
-    font-size: 14px; /* Reduz o tamanho da fonte */
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-    background-color: #2e38d0;
-    transform: scale(1.05);
+  background-color: #28a2f3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-secondary.cancel {
-    background-color: #ccc;
-    color: #000;
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-secondary.cancel:hover {
+  background-color: #c0392b;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.1rem;
+}
+
+.button-container button {
+  width: 48%;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .curriculum-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
+
+  .button-container button {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Estilização adicional para melhorar a aparência */
+.input-container:hover label {
+  color: #3498db;
+}
+
+.input-container input[type="radio"] + label {
+  display: inline-block;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.input-container input[type="radio"]:checked + label {
+  color: #3498db;
+  font-weight: 700;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Estilo para o scrollbar */
+.modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Radio button group styles */
+.radio-group-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+}
+
+.radio-group label {
+  margin-right: 1rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.radio-option input[type="radio"] {
+  margin-right: 0.5rem;
 }
