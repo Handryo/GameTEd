@@ -1,180 +1,173 @@
-body{
-    background-color: white;
-    height: 100vh;
+body {
+  background-color: white;
+  height: 100vh;
+}
+
+.interface {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+}
+
+.bt-contato a {
+  display: inline-block;
+}
+
+h2.titulo {
+  color: black;
+  font-size: 38px;
+  text-align: center;
+}
+
+/* ESTILO DO CABEÇALHO */
+
+header {
+  padding: 40px 4%;
+}
+
+header > .interface {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header a {
+  color: rgb(110, 110, 110);
+  text-decoration: none;
+  display: inline-block;
+  transition: .2s;
+}
+
+header nav ul {
+  list-style-type: none;
+}
+
+header nav ul li {
+  display: inline-block;
+  padding: 0 40px;
+}
+
+header nav ul li a:hover {
+  color: black;
+  transform: scale(1.03);
+}
+
+/* ESTILO DO TOP DO SITE */
+
+section.topo-do-site {
+  padding: 40px 4%;
+}
+
+section.topo-do-site .flex {
+  align-items: center;
+  justify-content: center;
+  gap: 90px;
+}
+
+.topo-do-site .txt-topo-site h1 {
+  font-size: 42px;
+  line-height: 40px;
+  gap: 90px;
+}
+
+.topo-do-site h1 span {
+  color: rgba(233, 71, 89, 1);
+  font-size: 84px;
+}
+
+.topo-do-site .txt-topo-site p {
+  color: rgb(75, 75, 75);
+  margin: 40px 0;
+}
+
+.topo-do-site .img-topo-site img {
+  transform: scale(0.9); /* Aumenta a imagem em 50% */
+  position: relative;
+  animation: flutuar 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes flutuar {
+  0% {
+    top: 0;
   }
-  
-  .interface{
-    max-width: 1280px;
-    margin: 0 auto;
+
+  100% {
+    top: 30px;
   }
-  
-  .flex{
-    display: flex;
-  }
-  
-  .bt-contato button{
-    padding: 10px 40px;
-    font-weight: 600;
-    background-color: rgba(0, 156, 199, 1);
-    border: 0;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .bt-contato button:hover{
-    transform: scale(1.03);
-    box-shadow: 0px 0px 8px rgb(7, 180, 227); ;
-  }
-  
-  h2.titulo{
-    color: black;
-    font-size: 38px;
-    text-align: center;
-  }
-  
-  /* ESTILO DO CABEÇALHO*/
-  
-  header{
-    padding: 40px 4%;
-  }
-  
-  header > .interface{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  header a{
-    color: rgb(110, 110, 110);
-    text-decoration: none;
-    display: inline-block;
-    transition: .2s;
-  }
-  header nav ul{
-    list-style-type: none;
-  }
-  
-  header nav ul li{
-    display: inline-block;
-    padding: 0 40px;
-  }
-  
-  header nav ul li a:hover{
-    color: black;
-    transform: scale(1.03);
-  }
-  
-  /* ESTILO DO TOP DO SITE */
-  
-  section.topo-do-site{
-    padding: 40px 4%;
-  }
-  section.topo-do-site .flex{
-    align-items: center;
-    justify-content: center;
-    gap: 90px;
-  }
-  
-  .topo-do-site .txt-topo-site h1{
-    font-size: 42px;
-    line-height: 40px;
-    gap: 90px;
-  }
-  
-  .topo-do-site h1 span{
-    color: rgba(233, 71, 89, 1);
-    font-size: 84px;
-  }
-  
-  .topo-do-site .txt-topo-site p{
-    color: rgb(75, 75, 75);
-    margin: 40px 0;
-  }
-  
-  .topo-do-site .img-topo-site img{
-    position: relative;
-    animation: flutuar 1.5s ease-in-out infinite alternate;
-  }
-  
-  @keyframes flutuar{
-    0%{
-        top: 0;
-    }
-    100%{
-        top: 30px;
-    }
-  }
-  
-  /* ESTILO ESPECIALIDADES */
-  section.especialidades{
-    padding: 40px 4%;
-  }
-  
-  section.especialidades .flex{
-    gap: 60px;
-  }
-  
-  section.especialidades .especialidades-box{
-    color: black;
-    padding: 40px;
-    border-radius: 20px;
-    margin-top: 20px;
-    transition: 0.3s;
-  }
-  
-  section.especialidades .especialidades-box img{
-    padding: 7px 3%;
-    position: top;
-  }
-  
-  section.especialidades .especialidades-box:hover{
-    transform: scale(1.05);
-    box-shadow: 0 0 8px black;
-  }
-  
-  section.especialidades .especialidades-box h3{
-    font-size: 28px;
-    margin: 15px 0;
-  }
-  
-  section.especialidades .especialidades-box p{
-    color:  rgb(75, 75, 75);
-  }
-  
-  /* ESTILO SOBRE */
-  
-  section.sobre{
-    padding: 40px 4%;
-  }
-  
-  section.sobre .flex{
-    align-items: center;
-    gap: 60px;
-  }
-  
-  .sobre .txt-sobre{
-    color: rgb(233, 71, 89, 1);
-  }
-  
-  .sobre .txt-sobre h2{
-    font-size: 40px;
-    line-height: 40px;
-    margin-bottom: 30px;
-  }
-  
-  .sobre .txt-sobre h2 span{
-    color: rgb(0, 0, 0);
-    display: block;
-  }
-  
-  .sobre .txt-sobre p{
-    color:  rgb(75, 75, 75);
-    margin: 20px 0;
-    text-align: justify;
-  }
-  
-/* ESTILO DE FORMULÁRIO DE CONTATO */
+}
+
+/* ESTILO ESPECIALIDADES */
+section.especialidades {
+  padding: 40px 4%;
+}
+
+section.especialidades .flex {
+  gap: 60px;
+}
+
+section.especialidades .especialidades-box {
+  color: black;
+  padding: 40px;
+  border-radius: 20px;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+section.especialidades .especialidades-box img {
+  padding: 7px 3%;
+  position: top;
+}
+
+section.especialidades .especialidades-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px black;
+}
+
+section.especialidades .especialidades-box h3 {
+  font-size: 28px;
+  margin: 15px 0;
+}
+
+section.especialidades .especialidades-box p {
+  color: rgb(75, 75, 75);
+}
+
+/* ESTILO SOBRE */
+
+section.sobre {
+  padding: 40px 4%;
+}
+
+section.sobre .flex {
+  align-items: center;
+  gap: 60px;
+}
+
+.sobre .txt-sobre {
+  color: rgb(233, 71, 89, 1);
+}
+
+.sobre .txt-sobre h2 {
+  font-size: 40px;
+  line-height: 40px;
+  margin-bottom: 30px;
+}
+
+.sobre .txt-sobre h2 span {
+  color: rgb(0, 0, 0);
+  display: block;
+}
+
+.sobre .txt-sobre p {
+  color: rgb(75, 75, 75);
+  margin: 20px 0;
+  text-align: justify;
+}
+
+/* ESTILO DO FORMULÁRIO DE CONTATO */
 
 section.formulario {
   padding: 80px 4%;
@@ -227,29 +220,12 @@ form .btn-enviar {
   width: 100%;
 }
 
-form .btn-enviar input[type="submit"] {
-  width: 100%;
-  background-color: #4285f4;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  border: none;
-  padding: 12px 15px;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-form .btn-enviar input[type="submit"]:hover {
-  background-color: #3367d6;
-}
-
 form input::placeholder,
 form textarea::placeholder {
   color: #777;
 }
 
-/* New styles for error message and character count */
+/* Novo estilo para a mensagem de erro e contagem de caracteres */
 .email-container {
   position: relative;
 }

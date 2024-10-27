@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import "./Home.css"
+import "./Home.css";
+import Button from "../../components/Button/Button"; // Updated import statement
 
 const Home = () => {
   const [nome, setNome] = useState('');
@@ -45,7 +46,7 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your form submission logic here
+    // Lógica de envio do formulário
     console.log({ nome, email, celular, sugestao });
   };
 
@@ -61,12 +62,12 @@ const Home = () => {
               </p>
               <div className="bt-contato">
                 <a href="#">
-                  <button>Cadastre-se Agora!</button>
+                  <Button variant="black" fullWidth>Cadastre-se Agora!</Button>
                 </a>
               </div>
             </div>
             <div className="img-topo-site">
-              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/BG1_tela_inicial.png?raw=true" alt="#" />
+              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/BG1_tela_inicial.png?raw=true" alt="Topo do site" />
             </div>
           </div>
         </div>
@@ -77,22 +78,19 @@ const Home = () => {
           <h2 className="titulo">NOSSOS USUÁRIOS.</h2>
           <div className="flex">
             <div className="especialidades-box">
-              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/est.png?raw=true" alt="" />
+              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/est.png?raw=true" alt="Estudante" />
               <h3>Estudante</h3>
-              <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet,
-              consectetur adipisicing elit. </p>
+              <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
             </div>  
             <div className="especialidades-box">
-              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/prof.png?raw=true" alt="" />
+              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/prof.png?raw=true" alt="Professor" />
               <h3>Professor</h3>
-              <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet,
-              consectetur adipisicing elit. </p>
+              <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
             </div>  
             <div className="especialidades-box">
-              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/dev.png?raw=true" alt="" />
+              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/dev.png?raw=true" alt="Desenvolvedor" />
               <h3>Desenvolvedor</h3>
-              <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet,
-              consectetur adipisicing elit. </p>
+              <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
             </div>  
           </div>  
         </div>  
@@ -102,20 +100,17 @@ const Home = () => {
         <div className="interface">
           <div className="flex">
             <div className="img-sobre">
-              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/BG2_tela_inicial.png?raw=true" alt="" />
+              <img src="https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/BG2_tela_inicial.png?raw=true" alt="Sobre" />
             </div>
             <div className="txt-sobre">
               <h2> TAREFAS POR JOGOS <span> CONHEÇA NOSSO CATÁLOGO.</span></h2>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. A nostrum quaerat ducimus quod, sit,
-              quis explicabo cum, distinctio quas obcaecati doloribus? . Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. A nostrum quaerat ducimus quod, sit,
-              quis explicabo cum, distinctio quas obcaecati doloribus? . Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. A nostrum quaerat ducimus quod, sit, quis explicabo cum, distinctio quas obcaecati doloribus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. A nostrum quaerat ducimus quod, sit, quis explicabo cum, distinctio quas obcaecati doloribus? Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
             </div>
           </div>
         </div>
       </section>
 
- 
       <section className="formulario">
         <div className="interface">
           <h2 className="titulo">ENVIE UMA SUGESTÃO</h2>
@@ -154,9 +149,7 @@ const Home = () => {
               onChange={handleSugestaoChange}
             ></textarea>
             <div className="character-count">{sugestao.length}/300</div>
-            <div className="btn-enviar">
-              <input type="submit" className="submit" value="Enviar" />
-            </div>
+            <Button variant="blue" fullWidth type="submit">Enviar</Button>
           </form>
         </div>
       </section>

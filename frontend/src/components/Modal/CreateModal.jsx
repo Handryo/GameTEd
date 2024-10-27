@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './Modal.css';
-import { addGame } from '../../services/gameService'; // Mantendo o import original
+import { addGame } from '../../services/gameService';
+import TextInput from '../../components/Input/TextInput';
+import Button from '../../components/Button/Button';
 
 export default function CreateModal({ closeModal, onGameSubmitted }) {
   const [formData, setFormData] = useState({
@@ -64,7 +66,7 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addGame({ ...formData, videoFile, photoFiles }); // Utilizando a função addGame
+      await addGame({ ...formData, videoFile, photoFiles });
       onGameSubmitted(formData);
       closeModal();
     } catch (error) {
@@ -78,77 +80,69 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
         <h2>Cadastre seu jogo preenchendo os campos</h2>
         <form onSubmit={handleSubmit}>
           <div className="input-container">
-          <img src="" alt="" />
-            <label htmlFor="title">Título</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleInputChange}
-              required
-            />
+            <img src="https://github.com/Handryo/GameTEd/blob/main/frontend/src/assets/Cadastrar-jogo.png?raw=true" alt="" />
           </div>
 
-          <div className="input-container">
-            <label htmlFor="projectUrl">URL do projeto</label>
-            <input
-              type="url"
-              id="projectUrl"
-              name="projectUrl"
-              value={formData.projectUrl}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+          <TextInput
+            label="Título"
+            id="title"
+            name="title"
+            placeholder="Insira o título do jogo"
+            value={formData.title}
+            onChange={handleInputChange}
+            required
+          />
 
-          <div className="input-container">
-            <label htmlFor="gameType">Tipo de jogo</label>
-            <input
-              type="text"
-              id="gameType"
-              name="gameType"
-              value={formData.gameType}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+          <TextInput
+            label="URL do projeto"
+            id="projectUrl"
+            name="projectUrl"
+            type="url"
+            placeholder="Ex: https://meujogo.com"
+            value={formData.projectUrl}
+            onChange={handleInputChange}
+            required
+          />
 
-          <div className="input-container">
-            <label htmlFor="ageRange">Faixa etária</label>
-            <input
-              type="text"
-              id="ageRange"
-              name="ageRange"
-              value={formData.ageRange}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+          <TextInput
+            label="Tipo de jogo"
+            id="gameType"
+            name="gameType"
+            placeholder="Ex: Aventura, Educacional"
+            value={formData.gameType}
+            onChange={handleInputChange}
+            required
+          />
 
-          <div className="input-container">
-            <label htmlFor="contentClassification">Classificação de conteúdo</label>
-            <input
-              type="text"
-              id="contentClassification"
-              name="contentClassification"
-              value={formData.contentClassification}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+          <TextInput
+            label="Faixa etária"
+            id="ageRange"
+            name="ageRange"
+            placeholder="Ex: 10-12 anos"
+            value={formData.ageRange}
+            onChange={handleInputChange}
+            required
+          />
 
-          <div className="input-container">
-            <label htmlFor="gameGenre">Gênero do jogo</label>
-            <input
-              type="text"
-              id="gameGenre"
-              name="gameGenre"
-              value={formData.gameGenre}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+          <TextInput
+            label="Classificação de conteúdo"
+            id="contentClassification"
+            name="contentClassification"
+            placeholder="Ex: Livre, 10+, 12+"
+            value={formData.contentClassification}
+            onChange={handleInputChange}
+            required
+          />
+
+          <TextInput
+            label="Gênero do jogo"
+            id="gameGenre"
+            name="gameGenre"
+            placeholder="Ex: Ação, Puzzle, Estratégia"
+            value={formData.gameGenre}
+            onChange={handleInputChange}
+            required
+          />
 
           <div className="input-container">
             <label htmlFor="videoUpload">Upload de vídeo demonstrativo (MAX 69 MB)</label>
@@ -173,49 +167,47 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
             />
           </div>
 
-          <div className="input-container">
-            <label htmlFor="platform">Plataforma</label>
-            <input
-              type="text"
-              id="platform"
-              name="platform"
-              value={formData.platform}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+          <TextInput
+            label="Plataforma"
+            id="platform"
+            name="platform"
+            placeholder="Ex: Web, Android, iOS"
+            value={formData.platform}
+            onChange={handleInputChange}
+            required
+          />
 
           <div className="input-container">
             <label>Base curricular</label>
             <div className="curriculum-grid">
-              <input
-                type="text"
+              <TextInput
+                id="component"
                 name="component"
-                placeholder="Componente"
+                placeholder="Componente curricular"
                 value={formData.curriculumBase.component}
                 onChange={handleCurriculumChange}
                 required
               />
-              <input
-                type="text"
+              <TextInput
+                id="thematicUnit"
                 name="thematicUnit"
                 placeholder="Unidade Temática"
                 value={formData.curriculumBase.thematicUnit}
                 onChange={handleCurriculumChange}
                 required
               />
-              <input
-                type="text"
+              <TextInput
+                id="knowledgeObjectives"
                 name="knowledgeObjectives"
                 placeholder="Objetivos de Conhecimento"
                 value={formData.curriculumBase.knowledgeObjectives}
                 onChange={handleCurriculumChange}
                 required
               />
-              <input
-                type="text"
+              <TextInput
+                id="skills"
                 name="skills"
-                placeholder="Habilidades"
+                placeholder="Habilidades desenvolvidas"
                 value={formData.curriculumBase.skills}
                 onChange={handleCurriculumChange}
                 required
@@ -228,6 +220,7 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
             <textarea
               id="informativeText"
               name="informativeText"
+              placeholder="Descreva o objetivo e detalhes do jogo"
               value={formData.informativeText}
               onChange={handleInputChange}
               minLength="10"
@@ -237,8 +230,8 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
           </div>
 
           <div className="button-container">
-            <button type="button" className="btn-secondary cancel" onClick={closeModal}>Cancelar</button>
-            <button type="submit" className="btn-secondary">Submeter</button>
+            <Button variant="red" onClick={closeModal}>Cancelar</Button>
+            <Button variant="blue" type="submit">Submeter</Button>
           </div>
         </form>
       </div>
