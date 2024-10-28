@@ -1,19 +1,24 @@
+// src/hooks/useGameDataMutate.js
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/games'; // Altere para o URL da sua API
+const API_URL = 'http://127.0.0.1:8000/api/games/';
 
 const useGameDataMutate = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
     async (gameData) => {
-      const response = await axios.post(API_URL, gameData);
+      const response = await axios.post(API_URL, gameData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       return response.data;
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('games'); // Ajuste o nome da query conforme necessário
+        queryClient.invalidateQueries('games');
       },
       onError: (error) => {
         console.error('Erro ao criar jogo:', error);
@@ -23,6 +28,3 @@ const useGameDataMutate = () => {
 };
 
 export default useGameDataMutate;
-
-
-

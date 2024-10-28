@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './MeusJogos.css';
 import { Card } from '../../components/Card/Card.jsx';
-import { getGames } from '../../services/gameService';
-import CreateModal from '../../components/Modal/CreateModal.jsx'; // Importando sem chaves
+import { getGames } from '../../hooks/useGameData.js';
+import CreateModal from '../../components/Modal/CreateModal.jsx';
 
 function MeusJogos() {
   const [gamesList, setGamesList] = useState([]);
@@ -21,10 +21,12 @@ function MeusJogos() {
     fetchGames();
   }, []);
 
+  // Função para abrir/fechar o modal
   const handleOpenModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  // Função para adicionar um novo jogo na lista, evitando duplicações
   const handleAddGame = (newGame) => {
     if (!gamesList.some(game => game.id === newGame.id)) {
       setGamesList(prevGames => [...prevGames, newGame]);
@@ -35,12 +37,12 @@ function MeusJogos() {
     <div className="container">
       <h1>Meus Jogos</h1>
       
-      {/* Container para os jogos */}
+      {/* Exibindo os jogos em uma grade de cards */}
       <div className="games-container">
         <div className="card-grid">
-          {gamesList.map(game => (
+        {gamesList.map((game, index) => (
             <Card
-              key={game.id}
+              key={index} // Temporário, substitua por game.id assim que possível
               title={game.title}
               image={game.image}
               genre={game.genre}
@@ -49,17 +51,18 @@ function MeusJogos() {
         </div>
       </div>
       
-      {/* Container para o botão de adicionar jogo */}
+      {/* Botão para abrir o modal de adicionar jogo */}
       <div className="button-container">
         <button className="submit-game-button" onClick={handleOpenModal}>
           Adicionar Jogo
         </button>
       </div>
 
+      {/* Modal de criação de novo jogo */}
       {isModalOpen && (
         <CreateModal 
           closeModal={handleOpenModal} 
-          onGameSubmitted={handleAddGame} // Ajustando o nome da prop para corresponder ao que está no modal
+          onGameSubmitted={handleAddGame} // Prop para passar o novo jogo para a lista
         />
       )}
     </div>

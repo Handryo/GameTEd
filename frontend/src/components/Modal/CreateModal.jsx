@@ -1,6 +1,7 @@
+// src/components/Modal/CreateModal.jsx
 import React, { useState } from 'react';
 import './Modal.css';
-import { addGame } from '../../services/gameService';
+import useGameDataMutate from '../../hooks/useGameDataMutate';
 import TextInput from '../../components/Input/TextInput';
 import Button from '../../components/Button/Button';
 
@@ -12,8 +13,6 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
     ageRange: '',
     contentClassification: '',
     gameGenre: '',
-    gboard: '',
-    thinktest: '',
     platform: '',
     curriculumBase: {
       component: '',
@@ -23,8 +22,11 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
     },
     informativeText: ''
   });
+  
   const [videoFile, setVideoFile] = useState(null);
   const [photoFiles, setPhotoFiles] = useState([]);
+
+  const { mutate } = useGameDataMutate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +49,7 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
 
   const handleVideoUpload = (e) => {
     const file = e.target.files[0];
-    if (file && file.size <= 69 * 1024 * 1024) { // Limite de 69 MB
+    if (file && file.size <= 69 * 1024 * 1024) {
       setVideoFile(file);
     } else {
       alert('O vídeo deve ter no máximo 69 MB.');
@@ -63,15 +65,46 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await addGame({ ...formData, videoFile, photoFiles });
-      onGameSubmitted(formData);
-      closeModal();
-    } catch (error) {
-      console.error('Erro ao submeter o jogo:', error);
+
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append('title', formData.title);
+    formDataToSubmit.append('project_url', formData.projectUrl);
+    formDataToSubmit.append('game_type', formData.gameType);
+    formDataToSubmit.append('age_range', formData.ageRange);
+    formDataToSubmit.append('content_classification', formData.contentClassification);
+    formDataToSubmit.append('game_genre', formData.gameGenre);
+    formDataToSubmit.append('platform', formData.platform);
+    formDataToSubmit.append('informative_text', formData.informativeText);
+    
+    // Adicionando `curriculumBase` como JSON
+    formDataToSubmit.append('curriculum_base', JSON.stringify(formData.curriculumBase));
+
+    // Arquivo de vídeo
+    if (videoFile) {
+      formDataToSubmit.append('video_file', videoFile);
     }
+
+    // Adicionando arquivos de fotos (opcional)
+    photoFiles.forEach((file) => {
+      formDataToSubmit.append('photo_files', file);
+    });
+
+    // Log do FormData para depuração
+    for (let pair of formDataToSubmit.entries()) {
+      console.log(`FormData Key: ${pair[0]}, Value: ${pair[1]}`);
+    }
+
+    mutate(formDataToSubmit, {
+      onSuccess: (newGame) => {
+        onGameSubmitted(newGame);
+        closeModal();
+      },
+      onError: (error) => {
+        console.error('Erro ao submeter o jogo:', error);
+      }
+    });
   };
 
   return (
@@ -79,10 +112,6 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
       <div className="modal-body">
         <h2>Cadastre seu jogo preenchendo os campos</h2>
         <form onSubmit={handleSubmit}>
-          <div className="input-container">
-            <img src="https://github.com/Handryo/GameTEd/blob/main/frontend/src/assets/Cadastrar-jogo.png?raw=true" alt="" />
-          </div>
-
           <TextInput
             label="Título"
             id="title"
@@ -92,7 +121,7 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
             onChange={handleInputChange}
             required
           />
-
+          
           <TextInput
             label="URL do projeto"
             id="projectUrl"
@@ -149,6 +178,7 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
             <input
               type="file"
               id="videoUpload"
+              name="videoFile"
               accept="video/*"
               onChange={handleVideoUpload}
               required
@@ -156,14 +186,14 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
           </div>
 
           <div className="input-container">
-            <label htmlFor="photoUpload">Upload de fotos (MAX - 12 fotos)</label>
+            <label htmlFor="photoUpload">Upload de fotos (opcional, MAX - 12 fotos)</label>
             <input
               type="file"
               id="photoUpload"
+              name="photoFiles"
               accept="image/*"
               multiple
               onChange={handlePhotoUpload}
-              required
             />
           </div>
 
