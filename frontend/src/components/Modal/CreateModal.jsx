@@ -74,21 +74,19 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
     formDataToSubmit.append('game_genre', formData.gameGenre);
     formDataToSubmit.append('platform', formData.platform);
 
-    // Serializando curriculum_base como JSON
-    formDataToSubmit.append('curriculum_base', JSON.stringify({
-      component: formData.curriculumBase.component,
-      thematic_unit: formData.curriculumBase.thematicUnit,
-      knowledge_objectives: formData.curriculumBase.knowledgeObjectives,
-      skills: formData.curriculumBase.skills
-    }));
+    // Adicionando curriculum_base como campos separados
+    formDataToSubmit.append('curriculum_base.component', formData.curriculumBase.component);
+    formDataToSubmit.append('curriculum_base.thematic_unit', formData.curriculumBase.thematicUnit);
+    formDataToSubmit.append('curriculum_base.knowledge_objectives', formData.curriculumBase.knowledgeObjectives);
+    formDataToSubmit.append('curriculum_base.skills', formData.curriculumBase.skills);
 
     formDataToSubmit.append('informative_text', formData.informativeText);
     formDataToSubmit.append('video_url', formData.videoUrl);
 
-    // Adicionando cada URL de foto
-    formData.photoUrls.forEach((url, index) => {
+    // Adicionando photo_urls como lista de URLs separadas
+    formData.photoUrls.forEach((url) => {
       if (url.trim()) {
-        formDataToSubmit.append(`photo_urls[${index}]`, url);
+        formDataToSubmit.append('photo_urls', url);
       }
     });
 
