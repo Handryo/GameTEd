@@ -10,7 +10,7 @@ class CurriculumBase(models.Model):
         return f"{self.component} - {self.thematic_unit}"
 
 class Photo(models.Model):
-    image = models.ImageField(upload_to='photos/')
+    image = models.URLField()  # Agora será uma URL
 
     def __str__(self):
         return f"Photo {self.id}"
@@ -25,7 +25,7 @@ class Game(models.Model):
     platform = models.CharField(max_length=100)
     curriculum_base = models.OneToOneField(CurriculumBase, on_delete=models.CASCADE, related_name="game")
     informative_text = models.TextField(max_length=500)
-    video_file = models.FileField(upload_to='videos/', null=True, blank=True)
+    video_url = models.URLField(null=True, blank=True)  # Atualizado para aceitar uma URL em vez de arquivo
     photo_files = models.ManyToManyField(Photo, related_name="games")
 
     def __str__(self):

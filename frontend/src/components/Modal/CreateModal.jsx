@@ -1,4 +1,3 @@
-// src/components/Modal/CreateModal.jsx
 import React, { useState } from 'react';
 import './Modal.css';
 import useGameDataMutate from '../../hooks/useGameDataMutate';
@@ -20,11 +19,10 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
       knowledgeObjectives: '',
       skills: ''
     },
-    informativeText: ''
+    informativeText: '',
+    videoUrl: '',
+    photoUrls: ['']
   });
-  
-  const [videoFile, setVideoFile] = useState(null);
-  const [photoFiles, setPhotoFiles] = useState([]);
 
   const { mutate } = useGameDataMutate();
 
@@ -33,6 +31,22 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
     setFormData(prevState => ({
       ...prevState,
       [name]: value
+    }));
+  };
+
+  const handlePhotoUrlChange = (index, value) => {
+    const updatedPhotoUrls = [...formData.photoUrls];
+    updatedPhotoUrls[index] = value;
+    setFormData(prevState => ({
+      ...prevState,
+      photoUrls: updatedPhotoUrls
+    }));
+  };
+
+  const addPhotoUrlField = () => {
+    setFormData(prevState => ({
+      ...prevState,
+      photoUrls: [...prevState.photoUrls, '']
     }));
   };
 
@@ -47,27 +61,10 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
     }));
   };
 
-  const handleVideoUpload = (e) => {
-    const file = e.target.files[0];
-    if (file && file.size <= 69 * 1024 * 1024) {
-      setVideoFile(file);
-    } else {
-      alert('O vídeo deve ter no máximo 69 MB.');
-    }
-  };
-
-  const handlePhotoUpload = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length <= 12) {
-      setPhotoFiles(files);
-    } else {
-      alert('Você pode enviar no máximo 12 fotos.');
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Preparando os dados como FormData
     const formDataToSubmit = new FormData();
     formDataToSubmit.append('title', formData.title);
     formDataToSubmit.append('project_url', formData.projectUrl);
@@ -76,25 +73,24 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
     formDataToSubmit.append('content_classification', formData.contentClassification);
     formDataToSubmit.append('game_genre', formData.gameGenre);
     formDataToSubmit.append('platform', formData.platform);
+
+    // Serializando curriculum_base como JSON
+    formDataToSubmit.append('curriculum_base', JSON.stringify({
+      component: formData.curriculumBase.component,
+      thematic_unit: formData.curriculumBase.thematicUnit,
+      knowledge_objectives: formData.curriculumBase.knowledgeObjectives,
+      skills: formData.curriculumBase.skills
+    }));
+
     formDataToSubmit.append('informative_text', formData.informativeText);
-    
-    // Adicionando `curriculumBase` como JSON
-    formDataToSubmit.append('curriculum_base', JSON.stringify(formData.curriculumBase));
+    formDataToSubmit.append('video_url', formData.videoUrl);
 
-    // Arquivo de vídeo
-    if (videoFile) {
-      formDataToSubmit.append('video_file', videoFile);
-    }
-
-    // Adicionando arquivos de fotos (opcional)
-    photoFiles.forEach((file) => {
-      formDataToSubmit.append('photo_files', file);
+    // Adicionando cada URL de foto
+    formData.photoUrls.forEach((url, index) => {
+      if (url.trim()) {
+        formDataToSubmit.append(`photo_urls[${index}]`, url);
+      }
     });
-
-    // Log do FormData para depuração
-    for (let pair of formDataToSubmit.entries()) {
-      console.log(`FormData Key: ${pair[0]}, Value: ${pair[1]}`);
-    }
 
     mutate(formDataToSubmit, {
       onSuccess: (newGame) => {
@@ -103,6 +99,7 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
       },
       onError: (error) => {
         console.error('Erro ao submeter o jogo:', error);
+        console.error('Detalhes da resposta do servidor:', error.response?.data);
       }
     });
   };
@@ -173,29 +170,28 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
             required
           />
 
-          <div className="input-container">
-            <label htmlFor="videoUpload">Upload de vídeo demonstrativo (MAX 69 MB)</label>
-            <input
-              type="file"
-              id="videoUpload"
-              name="videoFile"
-              accept="video/*"
-              onChange={handleVideoUpload}
-              required
-            />
-          </div>
+          <TextInput
+            label="URL do vídeo demonstrativo"
+            id="videoUrl"
+            name="videoUrl"
+            type="url"
+            placeholder="Insira a URL do vídeo"
+            value={formData.videoUrl}
+            onChange={handleInputChange}
+          />
 
-          <div className="input-container">
-            <label htmlFor="photoUpload">Upload de fotos (opcional, MAX - 12 fotos)</label>
-            <input
-              type="file"
-              id="photoUpload"
-              name="photoFiles"
-              accept="image/*"
-              multiple
-              onChange={handlePhotoUpload}
+          {formData.photoUrls.map((url, index) => (
+            <TextInput
+              key={index}
+              label={`URL da foto ${index + 1}`}
+              placeholder="Insira a URL da foto"
+              value={url}
+              onChange={(e) => handlePhotoUrlChange(index, e.target.value)}
             />
-          </div>
+          ))}
+          <Button variant="blue" type="button" onClick={addPhotoUrlField}>
+            Adicionar outra foto
+          </Button>
 
           <TextInput
             label="Plataforma"

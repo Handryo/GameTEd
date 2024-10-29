@@ -1,31 +1,27 @@
-from .models import Game, Photo, CurriculumBase
-from .validators import validate_video_size, validate_photo_count
+from .models import Game, CurriculumBase, Photo
 
-def handle_uploaded_photos(photo_files):
-    validate_photo_count(photo_files)
+def handle_photo_urls(photo_urls):
     photos = []
-    for photo_file in photo_files:
-        photo = Photo(image=photo_file)
+    for url in photo_urls:
+        photo = Photo(image=url)  # Assume que o campo `image` agora aceita URLs diretamente
         photo.save()
         photos.append(photo)
     return photos
 
 def create_game(data):
-    # Valida o tamanho do vídeo
-    video_file = data.get('video_file')
-    if video_file:
-        validate_video_size(video_file)
+    # Remove `video_file` do processo de validação de arquivos
+    video_url = data.get('video_file')
 
-    # Cria o objeto Game e os relacionamentos
+    # Extraindo dados de base curricular e URLs de fotos
     curriculum_data = data.pop('curriculum_base')
-    photos_data = data.pop('photo_files', [])
+    photo_urls = data.pop('photo_files', [])
 
-    # Cria a base curricular
+    # Criação de `CurriculumBase`
     curriculum = CurriculumBase.objects.create(**curriculum_data)
-    game = Game.objects.create(curriculum_base=curriculum, **data)
+    game = Game.objects.create(curriculum_base=curriculum, video_file=video_url, **data)
 
-    # Associa as fotos
-    photos = handle_uploaded_photos(photos_data)
+    # Associa URLs das fotos como instâncias de `Photo`
+    photos = handle_photo_urls(photo_urls)
     game.photo_files.set(photos)
 
     return game
