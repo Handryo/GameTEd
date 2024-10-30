@@ -7,6 +7,7 @@ class CurriculumBaseSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class GameSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)  # Inclui o ID como campo de leitura
     curriculum_base = CurriculumBaseSerializer()
     photo_urls = serializers.ListField(
         child=serializers.URLField(), required=False  # Lista de URLs para fotos
@@ -16,7 +17,7 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = [
-            'title', 'project_url', 'game_type', 'age_range', 'content_classification',
+            'id', 'title', 'project_url', 'game_type', 'age_range', 'content_classification',
             'game_genre', 'platform', 'curriculum_base', 'informative_text',
             'video_url', 'photo_urls'
         ]

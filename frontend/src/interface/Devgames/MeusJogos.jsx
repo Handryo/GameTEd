@@ -5,6 +5,9 @@ import Card from '../../components/Card/Card.jsx';
 import { getGames } from '../../hooks/useGameData.js';
 import CreateModal from '../../components/Modal/CreateModal.jsx';
 
+const BASE_URL = 'https://seuservidor.com/images/'; // Substitua pelo URL base, se necessário
+const FALLBACK_IMAGE = 'https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/logo.png?raw=true';
+
 function MeusJogos() {
   const [gamesList, setGamesList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,16 +62,28 @@ function MeusJogos() {
 
       <div className="games-container">
         <div className="card-grid">
-          {gamesList.map((game) => (
-            <Card
-              key={game.id} // Usa o ID atualizado
-              id={game.id} // Passa o ID diretamente como prop
-              title={game.title || "Título Indisponível"}
-              image={game.image || game.photo_files?.[0]?.image || '/path/to/default-image.jpg'}
-              genre={game.genre || "Gênero Indisponível"}
-              onClick={() => handleCardClick(game.id)} // Usa o ID direto no clique
-            />
-          ))}
+          {gamesList.map((game) => {
+            // Determina o caminho da imagem
+            const imageUrl = game.photo_files?.[0]?.image 
+              ? game.photo_files[0].image.startsWith('http')
+                ? game.photo_files[0].image
+                : `${BASE_URL}${game.photo_files[0].image}`
+              : FALLBACK_IMAGE;
+
+            console.log(`URL da imagem para o jogo ${game.title}:`, imageUrl); // Log para verificar a URL da imagem
+
+            return (
+              <Card
+                key={game.id} // Usa o ID atualizado
+                id={game.id} // Passa o ID diretamente como prop
+                title={game.title || "Título Indisponível"}
+                image={imageUrl} // Define a URL da imagem
+                fallbackImage={FALLBACK_IMAGE} // Define a imagem de fallback
+                genre={game.game_genre || "Gênero Indisponível"} // Atualiza para o nome correto do campo
+                onClick={() => handleCardClick(game.id)} // Usa o ID direto no clique
+              />
+            );
+          })}
         </div>
       </div>
       

@@ -40,8 +40,15 @@ INSTALLED_APPS = [
     'rest_framework',  # Django REST Framework
     'corsheaders',      # Django CORS Headers
     'games',  # App de jogos
+     'django_extensions',
 
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
