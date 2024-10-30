@@ -1,17 +1,19 @@
-// src/components/Card.jsx
 import React from 'react';
-import './Card.css'; // Verifique se o caminho do CSS está correto
+import './Card.css';
 
-export const Card = ({ title, image, genre, type }) => {
+function Card({ title, image, genre, onClick }) {
   return (
-    <div className="card">
-      <img src={image} alt={title} className="card-image" />
-      <div className="card-details">
+    <div className="card" onClick={onClick} role="button" tabIndex={0} aria-label={`Ver detalhes de ${title}`}>
+      {/* Imagem do Card */}
+      <img src={image} alt={`Imagem de ${title}`} className="card-image" />
+      
+      {/* Conteúdo do Card */}
+      <div className="card-content">
         <h3 className="card-title">{title}</h3>
-        <p className="card-genre">Gênero: {genre}</p>
+        <p className="card-genre">{genre}</p>
       </div>
     </div>
   );
-};
+}
 
-export default Card; // Exportação padrão
+export default Card;

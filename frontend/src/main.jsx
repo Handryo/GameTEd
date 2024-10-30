@@ -17,7 +17,6 @@ import MeusJogos from './interface/Devgames/MeusJogos.jsx';
 import EditarJogo from './components/EditarJogo.jsx';
 import GamePage from './interface/GamePage/GamePage.jsx';
 
-
 // Criação do QueryClient
 const queryClient = new QueryClient();
 
@@ -41,7 +40,7 @@ const router = createBrowserRouter([
       { path: "/meusjogos", element: <MeusJogos /> },
       { path: "/cadastrajogo", element: <CadastraJogo /> },
       { path: "/editarjogo/:id", element: <EditarJogo /> },
-      { path: "/jogo", element: <GamePage/> },
+      { path: "/game/:gameId", element: <GamePage /> }, // Corrigido para `<GamePage />`
     ],
   },
   { path: '*', element: <div>Erro: Página não encontrada</div> },

@@ -1,70 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'; // Para capturar o gameId do jogo
+import { getGameById } from '../../hooks/useGame.js'; // Função para obter o jogo pelo id
 import './GamePage.css';
 
 function GamePage() {
-  const gameInfo = {
-    title: "Gramática",
-    version: "GLA",
-    mainImage: "https://example.com/gramatica-game.jpg",
-    platforms: ["Windows 7 e 8", "Web", "Linux"],
-    genres: ["Educativo", "RPG", "Puzzle"],
-    ageRange: "9+ anos",
-    rating: 4.4,
-    ratingCount: 126,
-    creators: [
-      { name: "Creator1", avatar: "https://example.com/avatar1.jpg" },
-      { name: "Creator2", avatar: "https://example.com/avatar2.jpg" },
-      { name: "Creator3", avatar: "https://example.com/avatar3.jpg" },
-    ],
-    description: "Bem-vindo à Gramática, um jogo educacional que transforma o aprendizado de português em uma jornada divertida e envolvente! Explore um mundo mágico cheio de desafios criativos e aprimore suas habilidades linguísticas enquanto se diverte.",
-    comments: [
-      { user: "Usuário123", comment: "Gostei bastante do jogo!!!" },
-      { user: "Jogador456", comment: "Realmente é um jogo muito interessante, espero ver uma sequência!!!" },
-    ],
-    relatedGames: ["Filo Game", "Ecologic", "Gramática", "Mikuap Teram", "Procurando Pets", "Doce Sort"],
-  };
+  const { gameId } = useParams(); // Captura o gameId da URL
+  const [gameInfo, setGameInfo] = useState(null);
+
+  useEffect(() => {
+    const fetchGameInfo = async () => {
+      try {
+        const game = await getGameById(gameId); // Busca o jogo específico pelo ID
+        setGameInfo(game); // Define o jogo específico
+      } catch (error) {
+        console.error("Erro ao carregar informações do jogo:", error);
+      }
+    };
+    fetchGameInfo();
+  }, [gameId]);
+
+  if (!gameInfo) return <p>Carregando...</p>; // Mostra uma mensagem enquanto carrega
 
   return (
     <div className="container">
       <header className="header">
         <h1 className="title">
-          {gameInfo.title} <span className="version">{gameInfo.version}</span>
+          {gameInfo.title}
         </h1>
         <button>Favoritar</button>
       </header>
 
-      <img src={gameInfo.mainImage} alt={gameInfo.title} className="main-image" />
+      {/* Imagem principal do jogo */}
+      {gameInfo.photo_files.length > 0 && (
+        <img src={gameInfo.photo_files[0].image} alt={gameInfo.title} className="main-image" />
+      )}
 
       <div className="info-section">
         <div className="info-box">
           <h2>Informações</h2>
           <div>
             <h3>Plataforma:</h3>
-            {gameInfo.platforms.map((platform, index) => (
-              <span key={index} className="badge">{platform}</span>
-            ))}
+            <span className="badge">{gameInfo.platform}</span>
           </div>
           <div>
             <h3>Gênero:</h3>
-            {gameInfo.genres.map((genre, index) => (
-              <span key={index} className="badge">{genre}</span>
-            ))}
+            <span className="badge">{gameInfo.game_genre}</span>
           </div>
           <div>
             <h3>Faixa etária:</h3>
-            <span className="badge">{gameInfo.ageRange}</span>
+            <span className="badge">{gameInfo.age_range}</span>
           </div>
-        </div>
-        <div className="rating-box">
-          <h2>Avaliações</h2>
-          <p>{gameInfo.ratingCount} Avaliações</p>
-          <div>😃🙂😐🙁😞</div>
-          <p>Nota: {gameInfo.rating}</p>
-          <button>Baixar Jogo</button>
-          <button>Compartilhar</button>
+          <div>
+            <h3>Classificação de Conteúdo:</h3>
+            <span className="badge">{gameInfo.content_classification}</span>
+          </div>
+          <div>
+            <h3>Tipo de Jogo:</h3>
+            <span className="badge">{gameInfo.game_type}</span>
+          </div>
+          <div>
+            <h3>URL do Projeto:</h3>
+            <a href={gameInfo.project_url} target="_blank" rel="noopener noreferrer">
+              Acessar projeto
+            </a>
+          </div>
         </div>
       </div>
 
+      {/* Base curricular associada ao jogo */}
       <div>
         <h2>BNCC - Base Nacional Curricular Comum</h2>
         <table className="table">
@@ -78,47 +81,38 @@ function GamePage() {
           </thead>
           <tbody>
             <tr>
-              <td className="td">Português</td>
-              <td className="td">Gêneros Textuais e Variabilidades Linguísticas</td>
-              <td className="td">Compreender a diversidade de gêneros textuais e suas características linguísticas</td>
-              <td className="td">Identificar e analisar características textuais e linguísticas de diferentes gêneros</td>
+              <td className="td">{gameInfo.curriculum_base.component}</td>
+              <td className="td">{gameInfo.curriculum_base.thematic_unit}</td>
+              <td className="td">{gameInfo.curriculum_base.knowledge_objectives}</td>
+              <td className="td">{gameInfo.curriculum_base.skills}</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <div className="creator-section">
-        <h2>Criadores e colaboradores:</h2>
-        {gameInfo.creators.map((creator, index) => (
-          <img key={index} src={creator.avatar} alt={creator.name} className="creator-avatar" />
-        ))}
-        <p>Educadores e linguistas, colaboradores incríveis da Gramática, trazem paixão e expertise ao jogo educacional que aprimora a experiência centrada no aluno.</p>
-      </div>
-
+      {/* Descrição do jogo */}
       <div>
         <h2>Sobre o Jogo:</h2>
-        <p>{gameInfo.description}</p>
+        <p>{gameInfo.informative_text}</p>
       </div>
 
-      <div className="comment-section">
-        <h2>Comentários</h2>
-        {gameInfo.comments.map((comment, index) => (
-          <div key={index} className="comment">
-            <strong>{comment.user}</strong>
-            <p>{comment.comment}</p>
-          </div>
-        ))}
-        <textarea placeholder="Adicione um comentário..."></textarea>
-        <button>Comentar</button>
-      </div>
+      {/* Vídeo do jogo (opcional) */}
+      {gameInfo.video_url && (
+        <div className="video-section">
+          <h2>Vídeo do Jogo</h2>
+          <a href={gameInfo.video_url} target="_blank" rel="noopener noreferrer">
+            Assistir ao vídeo
+          </a>
+        </div>
+      )}
 
+      {/* Galeria de Imagens */}
       <div>
-        <h2>Outros títulos:</h2>
+        <h2>Galeria de Imagens</h2>
         <div className="related-games">
-          {gameInfo.relatedGames.map((game, index) => (
+          {gameInfo.photo_files.map((photo, index) => (
             <div key={index} className="related-game">
-              <img src={`https://example.com/${game.toLowerCase().replace(' ', '-')}.jpg`} alt={game} style={{ width: '100%', height: 'auto' }} />
-              <p>{game}</p>
+              <img src={photo.image} alt={`${gameInfo.title} image ${index + 1}`} style={{ width: '100%', height: 'auto' }} />
             </div>
           ))}
         </div>

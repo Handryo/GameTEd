@@ -1,50 +1,56 @@
-// src/pages/DesenvolvedorHome.jsx
 import React, { useState, useEffect } from 'react';
-import { Card } from '../../components/Card/Card.jsx'; 
-import { getGames } from '../../services/gameService';
+import { useNavigate } from 'react-router-dom'; // Importa o hook useNavigate
+import Card from '../../components/Card/Card.jsx'; // Importação correta do Card
+import { getGames } from '../../hooks/useGameData.js'; // Corrigida a importação de getGames
 import './DesenvolvedorHome.css'; 
 
 const DesenvolvedorHome = () => {
   const [gamesList, setGamesList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterGenre, setFilterGenre] = useState(''); // Estado para o gênero filtrado
+  const [filterGenre, setFilterGenre] = useState('');
   const gamesPerPage = 9;
+  const navigate = useNavigate(); // Hook de navegação
 
+  // Carrega os jogos ao montar o componente
   useEffect(() => {
     const fetchGames = async () => {
-      const games = await getGames();
-      setGamesList(games);
+      try {
+        const games = await getGames();
+        setGamesList(games);
+      } catch (error) {
+        console.error("Erro ao carregar jogos:", error);
+      }
     };
-
     fetchGames();
   }, []);
 
-  const handleGameAdded = (newGame) => {
-    setGamesList((prevGames) => [...prevGames, newGame]);
-  };
-
-  // Extrai a cllista de gêneros únicos dos jogos carregados
+  // Obtém lista de gêneros únicos para o filtro
   const genres = [...new Set(gamesList.map(game => game.genre))];
 
   // Filtra jogos com base no gênero selecionado
   const filteredGames = filterGenre ? gamesList.filter(game => game.genre === filterGenre) : gamesList;
 
-  // Calcula os jogos para a página atual
+  // Paginação
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
   const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
 
-  // Gera os números das páginas
+  // Números das páginas
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(filteredGames.length / gamesPerPage); i++) {
     pageNumbers.push(i);
   }
 
+  // Função de redirecionamento ao clicar no Card
+  const handleCardClick = (gameId) => {
+    navigate(`/game/${gameId}`);
+  };
+
   return (
     <div className="developer-home">
       <header className="hero-section">
         <div className="hero-content">
-          <h1>Transforme sua experiência de aprendizado!<br/>Divirta-se enquanto aprende! </h1>
+          <h1>Transforme sua experiência de aprendizado!<br/>Divirta-se enquanto aprende!</h1>
           <p>
             Utilize jogos como uma ferramenta de apoio à aprendizagem, explorando o vasto potencial que eles oferecem. Com nosso catálogo de jogos, você pode se divertir enquanto cria turmas, facilitando a interação com estudantes e amigos.<br/>
             Além disso, você pode se envolver na emocionante jornada de desenvolver jogos educacionais, explorando como eles podem ter um impacto profundo e positivo na vida de um estudante, abrindo portas para novas oportunidades de aprendizado.
@@ -71,14 +77,19 @@ const DesenvolvedorHome = () => {
         <main className="games-section">
           <h2>Jogos Educacionais</h2>
           <div className="games-grid">
-            {currentGames.map((game, index) => (
-              <Card 
-                key={index}
-                image={game.image}
-                title={game.title}
-                genre={game.genre}
-              />
-            ))}
+            {currentGames.length > 0 ? (
+              currentGames.map((game) => (
+                <Card 
+                  key={game.id}
+                  image={game.image}
+                  title={game.title}
+                  genre={game.genre}
+                  onClick={() => handleCardClick(game.id)} // Função de clique para redirecionamento
+                />
+              ))
+            ) : (
+              <p>Nenhum jogo encontrado</p>
+            )}
           </div>
           <div className="pagination">
             {pageNumbers.map(number => (
