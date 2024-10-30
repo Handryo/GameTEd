@@ -13,7 +13,15 @@ function MeusJogos() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const games = await getGames();
+        let games = await getGames();
+        console.log("Lista de jogos carregada:", games);
+
+        // Adiciona um ID único para cada jogo que não possui um ID
+        games = games.map((game, index) => ({
+          ...game,
+          id: game.id || `${index + 1}` // Atribui um ID temporário caso esteja ausente
+        }));
+
         setGamesList(games);
       } catch (error) {
         console.error("Erro ao carregar jogos:", error);
@@ -37,10 +45,11 @@ function MeusJogos() {
   };
 
   const handleCardClick = (gameId) => {
+    console.log("ID do jogo clicado:", gameId);
     if (gameId) {
-      navigate(`/game/${gameId}`);
+      navigate(`/game/${gameId}`); // Usa o caminho completo
     } else {
-      console.error("gameId não definido!");
+      console.error("ID do jogo não definido!");
     }
   };
 
@@ -50,13 +59,14 @@ function MeusJogos() {
 
       <div className="games-container">
         <div className="card-grid">
-          {gamesList.map((game, index) => (
+          {gamesList.map((game) => (
             <Card
-              key={`game-${game.id || index}`} // Chave única mesmo sem game.id
+              key={game.id} // Usa o ID atualizado
+              id={game.id} // Passa o ID diretamente como prop
               title={game.title || "Título Indisponível"}
               image={game.image || game.photo_files?.[0]?.image || '/path/to/default-image.jpg'}
               genre={game.genre || "Gênero Indisponível"}
-              onClick={() => handleCardClick(game.id || index)} // Fallback para o índice se o ID estiver ausente
+              onClick={() => handleCardClick(game.id)} // Usa o ID direto no clique
             />
           ))}
         </div>

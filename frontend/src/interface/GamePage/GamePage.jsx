@@ -10,8 +10,14 @@ function GamePage() {
   useEffect(() => {
     const fetchGameInfo = async () => {
       try {
-        const game = await getGameById(gameId); // Busca o jogo específico pelo ID
-        setGameInfo(game); // Define o jogo específico
+        console.log("Fetching game with ID:", gameId); // Log para depuração
+        const game = await getGameById(Number(gameId)); // Converte gameId para número, se necessário
+        if (game) {
+          console.log("Game data received:", game); // Log para confirmar dados do jogo
+          setGameInfo(game); // Define o jogo específico
+        } else {
+          console.error("Game not found for ID:", gameId);
+        }
       } catch (error) {
         console.error("Erro ao carregar informações do jogo:", error);
       }
@@ -31,7 +37,7 @@ function GamePage() {
       </header>
 
       {/* Imagem principal do jogo */}
-      {gameInfo.photo_files.length > 0 && (
+      {gameInfo.photo_files?.length > 0 && (
         <img src={gameInfo.photo_files[0].image} alt={gameInfo.title} className="main-image" />
       )}
 
@@ -81,10 +87,10 @@ function GamePage() {
           </thead>
           <tbody>
             <tr>
-              <td className="td">{gameInfo.curriculum_base.component}</td>
-              <td className="td">{gameInfo.curriculum_base.thematic_unit}</td>
-              <td className="td">{gameInfo.curriculum_base.knowledge_objectives}</td>
-              <td className="td">{gameInfo.curriculum_base.skills}</td>
+              <td className="td">{gameInfo.curriculum_base?.component}</td>
+              <td className="td">{gameInfo.curriculum_base?.thematic_unit}</td>
+              <td className="td">{gameInfo.curriculum_base?.knowledge_objectives}</td>
+              <td className="td">{gameInfo.curriculum_base?.skills}</td>
             </tr>
           </tbody>
         </table>
@@ -110,7 +116,7 @@ function GamePage() {
       <div>
         <h2>Galeria de Imagens</h2>
         <div className="related-games">
-          {gameInfo.photo_files.map((photo, index) => (
+          {gameInfo.photo_files?.map((photo, index) => (
             <div key={index} className="related-game">
               <img src={photo.image} alt={`${gameInfo.title} image ${index + 1}`} style={{ width: '100%', height: 'auto' }} />
             </div>
