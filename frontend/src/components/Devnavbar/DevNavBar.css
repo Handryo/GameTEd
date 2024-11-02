@@ -4,32 +4,42 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem; /* Ajusta o padding para diminuir a altura */
-  background-color: #f8f9fa;
+  padding: 0.5rem 1rem; /* Reduz a altura da navbar */
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 50px; /* Altura fixa reduzida */
 }
 
 .logo {
-  flex: 0 0 auto;
-  margin-right: 20px; /* Espaço à direita da logo */
+  flex: 0 0 15%; /* Reduz o espaço ocupado pela logo */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .logo img {
-  width: 100px; /* Ajusta o tamanho da logo para caber melhor */
+  width: 80px; /* Ajusta o tamanho da logo */
   height: auto;
 }
 
 .nav-items {
   flex: 1;
   display: flex;
-  justify-content: center; /* Centraliza o conteúdo */
+  justify-content: center; /* Centraliza os links */
   align-items: center;
-  margin-right: 20px; /* Espaçamento à direita */
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 20px; /* Espaça os itens igualmente */
+  gap: 20px;
 }
 
 .nav-links a {
@@ -38,6 +48,7 @@
   color: #333;
   transition: color 0.3s ease;
   white-space: nowrap; /* Impede quebra de linha */
+  font-size: 0.9rem; /* Ajusta o tamanho da fonte para caber na altura reduzida */
 }
 
 .nav-links a:hover {
@@ -45,13 +56,12 @@
 }
 
 .nav-items input {
-  padding: 0.5rem;
+  padding: 0.3rem 0.5rem; /* Reduz o padding para diminuir a altura do input */
   border: 1px solid #ddd;
   border-radius: 4px;
   outline: none;
-  width: 200px; /* Define uma largura fixa para o input */
+  width: 200px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  margin-left: 20px; /* Espaçamento entre links e input */
 }
 
 .nav-items input:focus {
@@ -60,46 +70,61 @@
 }
 
 .dev-button {
-  flex: 0 0 auto;
-  margin-left: auto; /* Move o botão para a extremidade direita */
+  flex: 0 0 15%; /* Reduz o espaço para o botão de autenticação */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .dev-button a {
   font-family: 'Montserrat', sans-serif;
   text-decoration: none;
   color: #333;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
+  font-size: 0.9rem; /* Ajusta o tamanho da fonte */
+  padding: 0.3rem 0.7rem; /* Reduz o padding para caber na altura reduzida */
   border-radius: 4px;
   transition: background-color 0.3s ease;
   display: flex;
-  align-items: center; /* Centraliza o ícone com o texto */
+  align-items: center;
 }
 
 .dev-button a:hover {
   background-color: #e9ecef;
 }
 
+/* Ajusta o padding do body para compensar a navbar fixa */
+body {
+  padding-top: 60px; /* Reduz o padding-top */
+}
+
+/* Responsividade */
+
 @media (max-width: 768px) {
   .dev-navbar {
     flex-direction: column;
-    align-items: stretch;
+    padding: 0.5rem;
+    height: auto; /* Permite que a altura se ajuste em telas pequenas */
   }
 
   .nav-items {
     justify-content: center;
-    margin: 0.5rem 0; /* Ajusta margem para telas menores */
+    margin: 0.5rem 0;
   }
 
   .nav-links {
-    gap: 15px; /* Reduz o espaçamento para telas menores */
+    flex-direction: column;
+    gap: 10px;
   }
 
   .nav-items input {
-    width: 100%; /* Ajusta largura para 100% em telas menores */
+    width: 100%; /* Expande o campo de pesquisa em telas menores */
   }
 
   .dev-button {
-    margin-top: 10px; /* Adiciona margem superior para espaçamento */
+    margin-top: 10px;
+  }
+
+  body {
+    padding-top: 100px; /* Aumenta o padding-top para compensar a altura da navbar em telas menores */
   }
 }

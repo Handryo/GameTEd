@@ -64,7 +64,7 @@ function MeusJogos() {
 
   return (
     <div className="container">
-      <h1>Meus Jogos</h1>
+      <h1>Submetidos</h1>
 
       <div className="games-container">
         <div className="card-grid">
