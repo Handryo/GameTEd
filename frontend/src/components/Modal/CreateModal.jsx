@@ -82,13 +82,16 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
 
     formDataToSubmit.append('informative_text', formData.informativeText);
     formDataToSubmit.append('video_url', formData.videoUrl);
+  
+    // Concatenando URLs das fotos em uma única string
+    const photoUrlsString = formData.photoUrls.join(',');
+    formDataToSubmit.append('photo_urls', photoUrlsString);
 
-    // Adicionando photo_urls como lista de URLs separadas
-    formData.photoUrls.forEach((url) => {
-      if (url.trim()) {
-        formDataToSubmit.append('photo_urls', url);
-      }
-    });
+    // Verificar dados antes do envio
+    for (let [key, value] of formDataToSubmit.entries()) {
+      console.log(key, value); // Verifique se todas as URLs de fotos aparecem aqui
+    }
+    console.log("Dados a serem enviados:", Object.fromEntries(formDataToSubmit.entries()));
 
     mutate(formDataToSubmit, {
       onSuccess: (newGame) => {

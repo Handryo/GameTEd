@@ -70,7 +70,7 @@ function MeusJogos() {
                 : `${BASE_URL}${game.photo_files[0].image}`
               : FALLBACK_IMAGE;
 
-            console.log(`URL da imagem para o jogo ${game.title}:`, imageUrl); // Log para verificar a URL da imagem
+            //console.log(`URL da imagem para o jogo ${game.title}:`, imageUrl); // Log para verificar a URL da imagem
 
             return (
               <Card
