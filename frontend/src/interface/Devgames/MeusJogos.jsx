@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import './MeusJogos.css';
 import Card from '../../components/Card/Card.jsx';
 import { getGames } from '../../hooks/useGameData.js';
+import { deleteGame } from '../../hooks/deleteGame.js';
 import CreateModal from '../../components/Modal/CreateModal.jsx';
 
-const BASE_URL = 'https://seuservidor.com/images/'; // Substitua pelo URL base, se necessário
+const BASE_URL = 'https://seuservidor.com/images/';
 const FALLBACK_IMAGE = 'https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/logo.png?raw=true';
 
 function MeusJogos() {
@@ -17,14 +18,10 @@ function MeusJogos() {
     const fetchGames = async () => {
       try {
         let games = await getGames();
-        console.log("Lista de jogos carregada:", games);
-
-        // Adiciona um ID único para cada jogo que não possui um ID
         games = games.map((game, index) => ({
           ...game,
-          id: game.id || `${index + 1}` // Atribui um ID temporário caso esteja ausente
+          id: game.id || `${index + 1}`
         }));
-
         setGamesList(games);
       } catch (error) {
         console.error("Erro ao carregar jogos:", error);
@@ -48,11 +45,20 @@ function MeusJogos() {
   };
 
   const handleCardClick = (gameId) => {
-    console.log("ID do jogo clicado:", gameId);
     if (gameId) {
-      navigate(`/game/${gameId}`); // Usa o caminho completo
+      navigate(`/game/${gameId}`);
     } else {
       console.error("ID do jogo não definido!");
+    }
+  };
+
+  const handleDeleteGame = async (gameId) => {
+    const success = await deleteGame(gameId);
+    if (success) {
+      setGamesList(prevGames => prevGames.filter(game => game.id !== gameId));
+      console.log("Jogo deletado com sucesso");
+    } else {
+      console.error("Erro ao deletar jogo");
     }
   };
 
@@ -63,24 +69,23 @@ function MeusJogos() {
       <div className="games-container">
         <div className="card-grid">
           {gamesList.map((game) => {
-            // Determina o caminho da imagem
             const imageUrl = game.photo_files?.[0]?.image 
               ? game.photo_files[0].image.startsWith('http')
                 ? game.photo_files[0].image
                 : `${BASE_URL}${game.photo_files[0].image}`
               : FALLBACK_IMAGE;
 
-            //console.log(`URL da imagem para o jogo ${game.title}:`, imageUrl); // Log para verificar a URL da imagem
-
             return (
               <Card
-                key={game.id} // Usa o ID atualizado
-                id={game.id} // Passa o ID diretamente como prop
+                key={game.id}
+                id={game.id}
                 title={game.title || "Título Indisponível"}
-                image={imageUrl} // Define a URL da imagem
-                fallbackImage={FALLBACK_IMAGE} // Define a imagem de fallback
-                genre={game.game_genre || "Gênero Indisponível"} // Atualiza para o nome correto do campo
-                onClick={() => handleCardClick(game.id)} // Usa o ID direto no clique
+                image={imageUrl}
+                fallbackImage={FALLBACK_IMAGE}
+                genre={game.game_genre || "Gênero Indisponível"}
+                onClick={() => handleCardClick(game.id)}
+                onDelete={() => handleDeleteGame(game.id)}
+                showDeleteButton={true} // Garante que o botão "Excluir" aparece apenas nos cards
               />
             );
           })}
@@ -104,3 +109,5 @@ function MeusJogos() {
 }
 
 export default MeusJogos;
+
+
