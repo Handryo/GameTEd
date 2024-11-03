@@ -8,7 +8,7 @@
   width: 100vw;
   padding: 20px;
   box-sizing: border-box;
-  overflow-x: hidden; /* Evita o scroll horizontal */
+  overflow-x: hidden;
 }
 
 h1 {
@@ -19,22 +19,23 @@ h1 {
 
 .games-container {
   width: 100%;
-  max-width: 1200px; /* Limite de largura para o container dos jogos */
+  max-width: 1200px;
   display: flex;
-  justify-content: center; /* Centraliza o conteúdo */
-  overflow-x: auto; /* Adiciona scroll horizontal para efeito de carrossel */
+  justify-content: center;
+  overflow-x: auto;
   padding-bottom: 20px;
 }
 
 .card-grid {
-  display: flex; /* Muda para flex para estilo carrossel */
-  gap: 16px; /* Espaçamento entre os cards */
-  overflow-x: auto; /* Permite rolagem horizontal para o efeito de carrossel */
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
   padding: 10px;
+  scroll-snap-type: x mandatory; /* Adiciona snapping para uma experiência de rolagem mais suave */
 }
 
 .card-grid::-webkit-scrollbar {
-  height: 8px; /* Altura da barra de rolagem */
+  height: 8px;
 }
 
 .card-grid::-webkit-scrollbar-thumb {
@@ -43,9 +44,9 @@ h1 {
 }
 
 .card {
-  flex: 0 0 auto; /* Evita que os cards se expandam para além do seu tamanho ideal */
-  width: 200px; /* Largura dos cards */
-  height: 300px; /* Altura dos cards */
+  flex: 0 0 auto;
+  width: 200px;
+  height: 300px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -55,12 +56,13 @@ h1 {
   align-items: center;
   overflow: hidden;
   text-align: center;
+  position: relative;
 }
 
 .card img {
   width: 100%;
   height: 180px;
-  object-fit: cover; /* Mantém a proporção da imagem */
+  object-fit: cover;
   border-bottom: 1px solid #ddd;
 }
 
@@ -71,14 +73,31 @@ h1 {
 }
 
 .card:hover {
-  transform: scale(1.05); /* Efeito de hover para ampliar o card */
+  transform: scale(1.05);
+}
+
+.card .edit-button {
+  width: 100%; /* Largura do botão igual ao card */
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0 0 10px 10px; /* Borda arredondada apenas embaixo */
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.card .edit-button:hover {
+  background-color: #0056b3;
 }
 
 .button-container {
   display: flex;
-  justify-content: center; /* Centraliza o botão */
+  justify-content: center;
   width: 100%;
-  padding: 20px 0; /* Espaçamento superior e inferior para o botão */
+  padding: 20px 0;
 }
 
 .submit-game-button {
@@ -93,8 +112,8 @@ h1 {
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  justify-content: center; /* Centraliza o texto dentro do botão */
-  margin: 0 auto; /* Centraliza o botão no container */
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .submit-game-button:hover {

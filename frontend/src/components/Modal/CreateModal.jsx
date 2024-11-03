@@ -21,7 +21,7 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
     },
     informativeText: '',
     videoUrl: '',
-    photoUrls: ['']
+    photoUrl: '' // Alterado para uma única URL de foto
   });
 
   const { mutate } = useGameDataMutate();
@@ -31,22 +31,6 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
     setFormData(prevState => ({
       ...prevState,
       [name]: value
-    }));
-  };
-
-  const handlePhotoUrlChange = (index, value) => {
-    const updatedPhotoUrls = [...formData.photoUrls];
-    updatedPhotoUrls[index] = value;
-    setFormData(prevState => ({
-      ...prevState,
-      photoUrls: updatedPhotoUrls
-    }));
-  };
-
-  const addPhotoUrlField = () => {
-    setFormData(prevState => ({
-      ...prevState,
-      photoUrls: [...prevState.photoUrls, '']
     }));
   };
 
@@ -82,14 +66,11 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
 
     formDataToSubmit.append('informative_text', formData.informativeText);
     formDataToSubmit.append('video_url', formData.videoUrl);
-  
-    // Concatenando URLs das fotos em uma única string
-    const photoUrlsString = formData.photoUrls.join(',');
-    formDataToSubmit.append('photo_urls', photoUrlsString);
+    formDataToSubmit.append('photo_url', formData.photoUrl); // Usando apenas um único campo de URL de foto
 
     // Verificar dados antes do envio
     for (let [key, value] of formDataToSubmit.entries()) {
-      console.log(key, value); // Verifique se todas as URLs de fotos aparecem aqui
+      console.log(key, value); // Verifique se todos os dados estão sendo enviados corretamente
     }
     console.log("Dados a serem enviados:", Object.fromEntries(formDataToSubmit.entries()));
 
@@ -181,18 +162,17 @@ export default function CreateModal({ closeModal, onGameSubmitted }) {
             onChange={handleInputChange}
           />
 
-          {formData.photoUrls.map((url, index) => (
-            <TextInput
-              key={index}
-              label={`URL da foto ${index + 1}`}
-              placeholder="Insira a URL da foto"
-              value={url}
-              onChange={(e) => handlePhotoUrlChange(index, e.target.value)}
-            />
-          ))}
-          <Button variant="blue" type="button" onClick={addPhotoUrlField}>
-            Adicionar outra foto
-          </Button>
+          {/* Campo para uma única URL de foto */}
+          <TextInput
+            label="URL da foto"
+            id="photoUrl"
+            name="photoUrl"
+            type="url"
+            placeholder="Insira a URL da foto"
+            value={formData.photoUrl}
+            onChange={handleInputChange}
+            required
+          />
 
           <TextInput
             label="Plataforma"

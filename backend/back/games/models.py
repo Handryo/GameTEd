@@ -9,12 +9,6 @@ class CurriculumBase(models.Model):
     def __str__(self):
         return f"{self.component} - {self.thematic_unit}"
 
-class Photo(models.Model):
-    image = models.URLField()  # Armazena a URL da imagem
-
-    def __str__(self):
-        return f"Photo {self.id}"
-
 class Game(models.Model):
     title = models.CharField(max_length=255)
     project_url = models.URLField()
@@ -30,7 +24,9 @@ class Game(models.Model):
     )
     informative_text = models.TextField(max_length=500)
     video_url = models.URLField(null=True, blank=True)  # URL opcional para vídeo
-    photo_files = models.ManyToManyField(Photo, related_name="games")
+
+    # Alterado para armazenar uma única URL da foto
+    photo_url = models.URLField(null=True, blank=True)  # Campo para uma única URL de foto
 
     def __str__(self):
         return self.title

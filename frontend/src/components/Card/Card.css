@@ -1,41 +1,55 @@
-/* Card.css */
 .card {
   position: relative;
+  width: 100%; /* Ajuste a largura conforme necessário */
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card-image {
   width: 100%;
-  height: 200px;
+  height: 150px; /* Ajuste a altura conforme necessário */
   object-fit: cover;
-  display: block;
 }
 
 .card-content {
-  padding: 15px;
-  box-sizing: border-box;
+  padding: 16px;
   text-align: center;
 }
 
-/* Botão de exclusão no canto superior direito com estilo "X" */
-.delete-button {
-  position: absolute;
-  top: 1px;
-  left: 85px;
-  background-color: transparent;
-  color: red;
-  border: none;
-  font-size: 30px;
-  font-weight: bold;
-  cursor: pointer;
+.card-title {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.card-genre {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 4px;
+}
+
+/* Estilos do botão de edição */
+.card-edit-button-container {
+  width: 100%;
   padding: 0;
 }
 
-.delete-button:hover {
-  color: darkred;
+.card-edit-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-edit-button:hover {
+  background-color: #0056b3;
 }

@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importa o hook useNavigate
-import Card from '../../components/Card/Card.jsx'; // Importação correta do Card
-import { getGames } from '../../hooks/useGameData.js'; // Corrigida a importação de getGames
-import './DesenvolvedorHome.css'; 
+import { useNavigate } from 'react-router-dom';
+import Card from '../../components/Card/Card.jsx';
+import { getGames } from '../../hooks/useGameData.js';
+import './DesenvolvedorHome.css';
+
+const FALLBACK_IMAGE = 'https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/logo.png?raw=true';
 
 const DesenvolvedorHome = () => {
   const [gamesList, setGamesList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filterGenre, setFilterGenre] = useState('');
   const gamesPerPage = 9;
-  const navigate = useNavigate(); // Hook de navegação
+  const navigate = useNavigate();
 
-  // Carrega os jogos ao montar o componente
   useEffect(() => {
     const fetchGames = async () => {
       try {
@@ -24,24 +25,18 @@ const DesenvolvedorHome = () => {
     fetchGames();
   }, []);
 
-  // Obtém lista de gêneros únicos para o filtro
-  const genres = [...new Set(gamesList.map(game => game.genre))];
+  const genres = [...new Set(gamesList.map(game => game.game_genre))];
+  const filteredGames = filterGenre ? gamesList.filter(game => game.game_genre === filterGenre) : gamesList;
 
-  // Filtra jogos com base no gênero selecionado
-  const filteredGames = filterGenre ? gamesList.filter(game => game.genre === filterGenre) : gamesList;
-
-  // Paginação
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
   const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
 
-  // Números das páginas
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(filteredGames.length / gamesPerPage); i++) {
     pageNumbers.push(i);
   }
 
-  // Função de redirecionamento ao clicar no Card
   const handleCardClick = (gameId) => {
     navigate(`/game/${gameId}`);
   };
@@ -81,10 +76,11 @@ const DesenvolvedorHome = () => {
               currentGames.map((game) => (
                 <Card 
                   key={game.id}
-                  image={game.image}
+                  image={game.photo_url || FALLBACK_IMAGE} // Usa photo_url com fallback
                   title={game.title}
-                  genre={game.genre}
-                  onClick={() => handleCardClick(game.id)} // Função de clique para redirecionamento
+                  genre={game.game_genre} // Passa o gênero do jogo
+                  projectUrl={game.project_url} // Adiciona o project_url para exibir no card
+                  onClick={() => handleCardClick(game.id)}
                 />
               ))
             ) : (

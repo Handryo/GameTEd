@@ -4,14 +4,16 @@ import './MeusJogos.css';
 import Card from '../../components/Card/Card.jsx';
 import { getGames } from '../../hooks/useGameData.js';
 import { deleteGame } from '../../hooks/deleteGame.js';
+import EditModal from '../../components/EditModal/EditModal.jsx';
 import CreateModal from '../../components/Modal/CreateModal.jsx';
 
-const BASE_URL = 'https://seuservidor.com/images/';
 const FALLBACK_IMAGE = 'https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/logo.png?raw=true';
 
 function MeusJogos() {
   const [gamesList, setGamesList] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedGame, setSelectedGame] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,8 +32,8 @@ function MeusJogos() {
     fetchGames();
   }, []);
 
-  const handleOpenModal = () => {
-    setIsModalOpen(!isModalOpen);
+  const handleOpenCreateModal = () => {
+    setIsCreateModalOpen(!isCreateModalOpen);
   };
 
   const handleAddGame = (newGame) => {
@@ -44,12 +46,16 @@ function MeusJogos() {
     }
   };
 
-  const handleCardClick = (gameId) => {
-    if (gameId) {
-      navigate(`/game/${gameId}`);
-    } else {
-      console.error("ID do jogo não definido!");
-    }
+  const handleEditGame = (game) => {
+    setSelectedGame(game);
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateGame = (updatedGame) => {
+    setGamesList(prevGames => 
+      prevGames.map(game => game.id === updatedGame.id ? updatedGame : game)
+    );
+    setIsEditModalOpen(false);
   };
 
   const handleDeleteGame = async (gameId) => {
@@ -57,8 +63,20 @@ function MeusJogos() {
     if (success) {
       setGamesList(prevGames => prevGames.filter(game => game.id !== gameId));
       console.log("Jogo deletado com sucesso");
+      if (selectedGame && selectedGame.id === gameId) {
+        setIsEditModalOpen(false);
+        setSelectedGame(null);
+      }
     } else {
       console.error("Erro ao deletar jogo");
+    }
+  };
+
+  const handleCardClick = (gameId) => {
+    if (gameId) {
+      navigate(`/game/${gameId}`);
+    } else {
+      console.error("ID do jogo não definido!");
     }
   };
 
@@ -69,23 +87,18 @@ function MeusJogos() {
       <div className="games-container">
         <div className="card-grid">
           {gamesList.map((game) => {
-            const imageUrl = game.photo_files?.[0]?.image 
-              ? game.photo_files[0].image.startsWith('http')
-                ? game.photo_files[0].image
-                : `${BASE_URL}${game.photo_files[0].image}`
-              : FALLBACK_IMAGE;
+            const photoUrl = game.photo_url || FALLBACK_IMAGE;
 
             return (
               <Card
                 key={game.id}
                 id={game.id}
                 title={game.title || "Título Indisponível"}
-                image={imageUrl}
-                fallbackImage={FALLBACK_IMAGE}
+                image={photoUrl}
                 genre={game.game_genre || "Gênero Indisponível"}
                 onClick={() => handleCardClick(game.id)}
-                onDelete={() => handleDeleteGame(game.id)}
-                showDeleteButton={true} // Garante que o botão "Excluir" aparece apenas nos cards
+                onEdit={() => handleEditGame(game)}
+                showEditButton={true} // Apenas nesta página
               />
             );
           })}
@@ -93,15 +106,24 @@ function MeusJogos() {
       </div>
       
       <div className="button-container">
-        <button className="submit-game-button" onClick={handleOpenModal}>
+        <button className="submit-game-button" onClick={handleOpenCreateModal}>
           Adicionar Jogo
         </button>
       </div>
 
-      {isModalOpen && (
+      {isCreateModalOpen && (
         <CreateModal 
-          closeModal={handleOpenModal} 
+          closeModal={handleOpenCreateModal} 
           onGameSubmitted={handleAddGame}
+        />
+      )}
+
+      {isEditModalOpen && selectedGame && (
+        <EditModal 
+          gameData={selectedGame} 
+          onClose={() => setIsEditModalOpen(false)} 
+          onUpdate={handleUpdateGame} 
+          onDelete={handleDeleteGame} 
         />
       )}
     </div>
@@ -109,5 +131,3 @@ function MeusJogos() {
 }
 
 export default MeusJogos;
-
-

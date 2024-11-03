@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getGameById } from '../../hooks/useGame';
 import './GamePage.css';
 
+const FALLBACK_IMAGE = 'https://github.com/WesllenVasconcelos/game_ted_front/blob/main/game-ted/src/assets/logo.png?raw=true';
+
 function GamePage() {
   const { gameId } = useParams();
   const [gameInfo, setGameInfo] = useState(null);
@@ -13,6 +15,7 @@ function GamePage() {
       try {
         const game = await getGameById(Number(gameId));
         if (game) {
+          console.log("Dados do jogo:", game);
           setGameInfo(game);
         }
       } catch (error) {
@@ -36,25 +39,18 @@ function GamePage() {
       <header className="header">
         <h1 className="title">{gameInfo.title}</h1>
         <button className="favorite-button" title="Favoritar">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24" 
-            height="24" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
           </svg>
         </button>
       </header>
 
-      {gameInfo.photo_files?.length > 0 && (
-        <img src={gameInfo.photo_files[0].image} alt={gameInfo.title} className="main-image" />
-      )}
+      <img
+        src={gameInfo.photo_url || FALLBACK_IMAGE}
+        alt={`Imagem de ${gameInfo.title}`}
+        className="main-image"
+        onError={(e) => (e.target.src = FALLBACK_IMAGE)}
+      />
 
       <div className="info-section">
         <div className="info-box">
@@ -81,9 +77,32 @@ function GamePage() {
           </div>
           <div className="info-item">
             <h3>URL do Projeto:</h3>
-            <a href={gameInfo.project_url} target="_blank" rel="noopener noreferrer">Acessar projeto</a>
+            <a href={gameInfo.project_url} target="_blank" rel="noopener noreferrer" className="badge">Acessar projeto</a>
           </div>
         </div>
+      </div>
+
+      <div className="curriculum-section">
+        <h2>Base Curricular</h2>
+        <div className="curriculum-grid">
+          <div className="curriculum-item">
+            <strong>Componente:</strong> {gameInfo.curriculum_base?.component || "N/A"}
+          </div>
+          <div className="curriculum-item">
+            <strong>Unidade Temática:</strong> {gameInfo.curriculum_base?.thematic_unit || "N/A"}
+          </div>
+          <div className="curriculum-item">
+            <strong>Objetivos de Conhecimento:</strong> {gameInfo.curriculum_base?.knowledge_objectives || "N/A"}
+          </div>
+          <div className="curriculum-item">
+            <strong>Habilidades Desenvolvidas:</strong> {gameInfo.curriculum_base?.skills || "N/A"}
+          </div>
+        </div>
+      </div>
+
+      <div className="description-section">
+        <h2>Descrição</h2>
+        <p>{gameInfo.informative_text}</p>
       </div>
 
       <div className="video-section">
@@ -104,17 +123,6 @@ function GamePage() {
         )}
         <div className="video-link">
           <a href={videoLink} target="_blank" rel="noopener noreferrer">Assistir no YouTube</a>
-        </div>
-      </div>
-
-      <div className="gallery-section">
-        <h2>Galeria de Imagens</h2>
-        <div className="related-games">
-          {gameInfo.photo_files?.map((photo, index) => (
-            <div key={index} className="related-game">
-              <img src={photo.image} alt={`${gameInfo.title} image ${index + 1}`} />
-            </div>
-          ))}
         </div>
       </div>
     </div>
