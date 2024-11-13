@@ -8,5 +8,5 @@ export const getGameById = async (gameId) => {
     } catch (error) {
       console.error(error);
     }
-  };
+};
   

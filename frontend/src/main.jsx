@@ -14,7 +14,6 @@ import DesenvolvedorHome from './interface/Devhome/DesenvolvedorHome.jsx';
 import SalasDeTeste from './interface/SalasDeTeste.jsx';
 import Biblioteca from './interface/Library/Biblioteca.jsx';
 import MeusJogos from './interface/Devgames/MeusJogos.jsx';
-import EditarJogo from './components/EditarJogo.jsx';
 import GamePage from './interface/GamePage/GamePage.jsx';
 
 // Criação do QueryClient
@@ -39,7 +38,6 @@ const router = createBrowserRouter([
       { path: "/biblioteca", element: <Biblioteca /> },
       { path: "/meusjogos", element: <MeusJogos /> },
       { path: "/cadastrajogo", element: <CadastraJogo /> },
-      { path: "/editarjogo/:id", element: <EditarJogo /> },
       { path: "/game/:gameId", element: <GamePage /> }, // Corrigido para `<GamePage />`
     ],
   },
